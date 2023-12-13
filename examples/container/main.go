@@ -9,7 +9,7 @@ import (
 )
 
 var c, _ = container.New(
-	container.Service{Name: "Hello", Path: "/apps/hello", Host: "localhost:8000"},
+	container.Service{Name: "Hello", Path: "/apps/hello", Host: "localhost:8002"},
 	container.Service{Name: "Goodbye", Path: "/apps/goodbye", Host: "localhost:8001"},
 )
 

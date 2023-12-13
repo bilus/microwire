@@ -1,8 +1,6 @@
 package templates
 
-
-templ FormTemplate(fname string) {
-<turbo-frame id="app-container">
+templ Form(fname string) {
     <form action="/apps/hello/say" method="POST">
         <label for="fname">First name:</label><br/>
         <input type="text" id="fname" name="fname" value={fname}/><br/>
@@ -10,27 +8,12 @@ templ FormTemplate(fname string) {
         <input type="text" id="lname" name="lname" value="Doe"/><br/><br/>
         <input type="submit" value="Submit"/>
     </form>
-</turbo-frame>
 }
 
-templ FormTemplateStream(fname string) {
-<turbo-stream action="replace" target="title">
-    <template>
-        <div id="title">
-            Hello { fname }
-        </div>
-    </template>
-</turbo-stream>
-<turbo-stream action="replace" target="alert">
-    <template>
-        <div id="alert">
-            First name: { fname }
-        </div>
-    </template>
-</turbo-stream>
-<turbo-stream action="replace" target="app-container">
-    <template>
-        @FormTemplate(fname)
-    </template>
-</turbo-stream>
+templ Title(fname string) {
+    Hello { fname }
+}
+
+templ Alert(fname string) {
+    First name: { fname }
 }

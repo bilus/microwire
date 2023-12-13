@@ -1,0 +1,19 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+cmd = "templ generate && go build -o ./tmp/app/main ./"
+bin = "tmp/app"
+
+full_bin = "./tmp/app/main"
+log = "air_errors.log"
+include_ext = ["go", "yaml", "templ", "toml"]
+exclude_dir = ["tmp"]
+exclude_regex = ["_templ.go"]
+delay = 1000
+
+[log]
+time = true
+
+[misc]
+clean_on_exit = true

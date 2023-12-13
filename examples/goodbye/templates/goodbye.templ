@@ -1,0 +1,20 @@
+package templates
+
+
+
+templ GoodbyeTemplate(message string) {
+	<turbo-stream action="replace" target="app-container">
+        <template>
+            <turbo-frame id="app-container">
+                <p>{ message }</p>
+            </turbo-frame>
+        </template>
+    </turbo-stream>
+    <turbo-stream action="replace" target="title">
+        <template>
+            <div id="title">
+                Goodbye
+            </div>
+        </template>
+    </turbo-stream>
+}

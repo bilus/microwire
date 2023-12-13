@@ -1,0 +1,32 @@
+package templates
+
+import "github.com/bilus/microwire/container"
+
+templ ContainerTemplate(url string, services []container.Service) {
+<html>
+    <head>
+        <script type="module">
+         import * as hotwiredTurbo from 'https://cdn.jsdelivr.net/npm/@hotwired/turbo';
+        </script>
+    </head>
+    <body>
+        <header>
+            <ul>
+                for _, service := range services {
+                <li>
+                    <a class="nav-link active" aria-current="page" href={ templ.SafeURL(service.Path) } data-turbo-frame="app-container" data-turbo-action="advance">
+                        { service.Name }
+                    </a>
+                </li>
+                }
+            </ul>
+        </header>
+        <main>
+            <h1><div id="title"></div></h1>
+            <turbo-frame id="app-container" src={ url }>
+            </turbo-frame>
+            <h2><div id="alert"></div></h2>
+        </main>
+    </body>
+</html>
+}

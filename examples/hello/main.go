@@ -4,22 +4,20 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/bilus/microwire/examples/hello/form"
 	"github.com/bilus/microwire/examples/hello/templates"
 	"github.com/bilus/microwire/turbo"
 
 	"github.com/bilus/microwire/service"
 )
 
-type Form struct {
-	FirstName string
-}
-
-var form Form // Don't do that!
+var theForm form.Form // Don't do that!
 
 func HandleRequest(w http.ResponseWriter, r *http.Request) {
 	stream := turbo.Stream(
-		turbo.Update("app-container", templates.Form(form.FirstName)),
-		turbo.Update("title", templates.Title(form.FirstName)),
+		turbo.Update("app-container", templates.Form(theForm)),
+		turbo.Update("title", templates.Title(theForm.FirstName)),
+		turbo.Update("alert", templates.Alert(theForm)),
 	)
 	stream.ServeHTTP(w, r)
 }
@@ -30,13 +28,9 @@ func HandleForm(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	form.FirstName = r.PostFormValue("fname")
-	stream := turbo.Stream(
-		turbo.Update("app-container", templates.Form(form.FirstName)),
-		turbo.Update("title", templates.Title(form.FirstName)),
-		turbo.Update("alert", templates.Alert(form.FirstName)),
-	)
-	stream.ServeHTTP(w, r)
+	theForm.FirstName = r.PostFormValue("fname")
+	theForm.LastName = r.PostFormValue("lname")
+	HandleRequest(w, r)
 }
 
 func main() {

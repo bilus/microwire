@@ -5,6 +5,8 @@ import (
 	"net/url"
 	"slices"
 	"strings"
+
+	"github.com/bilus/microwire/turbo"
 )
 
 type Container struct {
@@ -21,12 +23,8 @@ func (c Container) Services() []Service {
 	return slices.Clone(c.services)
 }
 
-func (Container) IsTurbo(r *http.Request) bool {
-	return r.Header.Get("Turbo-Frame") != ""
-}
-
 func (c Container) ProxyTurbo(w http.ResponseWriter, r *http.Request) bool {
-	if !c.IsTurbo(r) {
+	if !turbo.IsTurbo(r) {
 		return false
 	}
 	service, ok := c.resolve(r.URL)
